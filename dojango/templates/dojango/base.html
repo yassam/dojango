@@ -37,19 +37,19 @@
     {% endblock %}
     <script type="text/javascript">
       {# baseUrl setting is needed, if you want to combine a local with a remote build! #}
-			{% block _dojango_dojo_config %}
-				var {% if DOJANGO.VERSION > '1.6' %}dojoConfig{% else %}djConfig{% endif %} = {
+      {% block _dojango_dojo_config %}
+      var {% if DOJANGO.VERSION > '1.6' %}dojoConfig{% else %}djConfig{% endif %} = {
           'isDebug':{{ DOJANGO.DEBUG|json }},
           'parseOnLoad':true,
           'baseUrl':"{{ DOJANGO.DOJO_BASE_PATH }}"
-					{% if DOJANGO.USE_AMD %},'async': true{% endif %}
+          {% if DOJANGO.USE_AMD %},'async': true{% endif %}
           {% if not DOJANGO.IS_LOCAL %}
           ,'dojoBlankHtmlUrl':"{{ DOJANGO.DOJANGO_URL }}/resources/blank.html"
           ,'dojoIframeHistoryUrl':"{{ DOJANGO.DOJANGO_URL }}/resources/blank.html"
           {% endif %}
           {% if DOJANGO.VERSION > '1.6' %}
-					,'cacheBust': new Date()
-					,'packages':[{'name': 'dojo', 'location': '{{ DOJANGO.DOJO_URL }}'}, {'name': 'dijit', 'location': '{{ DOJANGO.DIJIT_URL }}'}, {'name': 'dojox', 'location': '{{ DOJANGO.DOJOX_URL }}'}]
+          ,'cacheBust': new Date()
+          ,'packages':[{'name': 'dojo', 'location': '{{ DOJANGO.DOJO_URL }}'}, {'name': 'dijit', 'location': '{{ DOJANGO.DIJIT_URL }}'}, {'name': 'dojox', 'location': '{{ DOJANGO.DOJOX_URL }}'}]
           {% else %}{% if DOJANGO.CDN_USE_SSL and not DOJANGO.IS_LOCAL %}
           ,'modulePaths':{'dojo': '{{ DOJANGO.DOJO_URL }}', 'dijit': '{{ DOJANGO.DIJIT_URL }}', 'dojox': '{{ DOJANGO.DOJOX_URL }}'}
           {% endif %}{% endif %}
@@ -79,17 +79,19 @@
   {% endblock %}
   {% block dojango_require %}
   <script type="text/javascript">
-				{% if DOJANGO.USE_AMD %}
-				require([{% for require in DOJANGO.COLLECTOR %}
-					"{{ require }}"{% if not forloop.last %},{% endif %}{% endfor %}], function(){
-						{% block dojango_amd_callback %}{% endblock %}
-					});
-				{% else %}
+    {% if DOJANGO.USE_AMD %}
+    require([
+        {% for require in DOJANGO.COLLECTOR %}
+        "{{ require }}"{% if not forloop.last %},{% endif %}
+        {% endfor %}], function(){
+            {% block dojango_amd_callback %}{% endblock %}
+        });
+    {% else %}
     {% for require in DOJANGO.COLLECTOR %}
-					dojo.require("{{ require }}");{% endfor %}
-				{% endif %}
+    dojo.require("{{ require }}");{% endfor %}
+    {% endif %}
   </script>
-  {% endblock %}
+{% endblock %}
   </body>
 {% endblock %}
 </html>
