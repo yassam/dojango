@@ -47,6 +47,7 @@ class Config:
         ret['IS_LOCAL'] = self.config.get("is_local", False)
         ret['UNCOMPRESSED'] = self.config.get("uncompressed", False)
         ret['USE_GFX'] = self.config.get("use_gfx", False)
+        ret['USE_AMD'] = settings.DOJO_USE_AMD_LOADER
         ret['VERSION'] = self.version
         # preparing all dojo related urls here
         ret['THEME_CSS_URL'] = self.theme_css_url()

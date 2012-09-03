@@ -1,3 +1,4 @@
+from dojango.conf import settings
 from threading import local
 
 __all__ = ['activate', 'deactivate', 'get_collector', 'add_module']
@@ -15,7 +16,7 @@ def activate():
         def add(self, module):
             # just add a module once!
             if not module in self.used_dojo_modules:
-                self.used_dojo_modules.append(module)
+                self.used_dojo_modules.append(settings.DOJO_USE_AMD_LOADER and module.replace(".", "/") or module)
 
     _active.value = Collector()
 
