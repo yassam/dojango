@@ -8,7 +8,7 @@ DOJO_VERSION = getattr(settings, "DOJANGO_DOJO_VERSION", "1.8.0")
 # NOTE: you have to use "google_xd" for dojo versions < 1.7.0
 DOJO_PROFILE = getattr(settings, "DOJANGO_DOJO_PROFILE", "google")
 # Since Dojo 1.7.0 you are able to use the new AMD loader
-DOJO_USE_AMD_LOADER = getattr(settings, "DOJANGO_DOJO_USE_AMD_LOADER", DOJO_VERSION >= "1.7")
+DOJO_USE_AMD_LOADER = getattr(settings, "DOJANGO_DOJO_USE_AMD_LOADER", False)
 # Since Dojo 1.6 djConfig has been deprecated in favour of dojoConfig.
 USE_DJ_CONFIG = getattr(settings, "DOJANGO_USE_DJ_CONFIG", DOJO_VERSION < "1.6")
 # DJ_CONFIG_NAME is the actual name of the global dojo config object
