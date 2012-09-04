@@ -37,7 +37,7 @@
     {% endblock %}
     <script type="text/javascript">
       {# baseUrl setting is needed, if you want to combine a local with a remote build! #}
-      {% block _dojango_dojo_config %}
+      {% block _dojango_dj_config %}
       var {% if DOJANGO.VERSION > '1.6' %}dojoConfig{% else %}djConfig{% endif %} = {
           'isDebug':{{ DOJANGO.DEBUG|json }},
           'parseOnLoad':true,

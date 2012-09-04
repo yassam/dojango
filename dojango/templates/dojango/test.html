@@ -1,6 +1,6 @@
 {% extends "dojango/base.html" %}
 
-{% block dojango_post_dojo_config %}
+{% block dojango_post_dj_config %}
 	<script>
 		{% if DOJANGO.VERSION > '1.6' %}dojoConfig{% else %}djConfig{% endif %}.parseOnLoad = false;
 	</script>
