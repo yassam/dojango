@@ -62,6 +62,7 @@ class Config:
         ret['DEBUG'] = settings.DOJO_DEBUG
         ret['COLLECTOR'] = dojo_collector.get_modules()
         ret['CDN_USE_SSL'] = settings.CDN_USE_SSL
+        ret['DJ_CONFIG_NAME'] = settings.DJ_CONFIG_NAME
         # adding all installed dojo-media namespaces
         ret.update(self.dojo_media_urls())
         return ret

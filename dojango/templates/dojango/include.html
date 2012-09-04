@@ -12,7 +12,7 @@
 <script type="text/javascript">
 	{# baseUrl setting is needed, if you want to combine a local with a remote build! #}
 	{% block _dojango_dj_config %}
-		var {% if DOJANGO.VERSION > '1.6' %}dojoConfig{% else %}djConfig{% endif %} = {
+		var {{ DOJANGO.DJ_CONFIG_NAME }} = {
 			'isDebug':{{ DOJANGO.DEBUG|json }},
 			'parseOnLoad': true,
 			'baseUrl':"{{ DOJANGO.DOJO_BASE_PATH }}"

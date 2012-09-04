@@ -9,6 +9,6 @@
 
 {% block _dojango_post_dj_config %}
 <script type="text/javascript">
-    djConfig['locale'] = "{{ LANGUAGE_CODE }}";
+    {{ DOJANGO.DJ_CONFIG_NAME }}['locale'] = "{{ LANGUAGE_CODE }}";
 </script>
 {% endblock %}

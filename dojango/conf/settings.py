@@ -9,6 +9,10 @@ DOJO_VERSION = getattr(settings, "DOJANGO_DOJO_VERSION", "1.8.0")
 DOJO_PROFILE = getattr(settings, "DOJANGO_DOJO_PROFILE", "google")
 # Since Dojo 1.7.0 you are able to use the new AMD loader
 DOJO_USE_AMD_LOADER = getattr(settings, "DOJANGO_DOJO_USE_AMD_LOADER", DOJO_VERSION >= "1.7")
+# Since Dojo 1.6 djConfig has been deprecated in favour of dojoConfig.
+USE_DJ_CONFIG = getattr(settings, "DOJANGO_USE_DJ_CONFIG", DOJO_VERSION < "1.6")
+# DJ_CONFIG_NAME is the actual name of the global dojo config object
+DJ_CONFIG_NAME = getattr(settings, "DOJANGO_DJ_CONFIG_NAME", "djConfig" if USE_DJ_CONFIG else "dojoConfig")
 
 DOJO_MEDIA_URL = getattr(settings, "DOJANGO_DOJO_MEDIA_URL", 'dojo-media')
 BASE_MEDIA_URL = getattr(settings, "DOJANGO_BASE_MEDIA_URL", '/dojango/%s' % DOJO_MEDIA_URL)

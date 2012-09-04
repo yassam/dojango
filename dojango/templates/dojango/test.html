@@ -2,7 +2,7 @@
 
 {% block dojango_post_dj_config %}
 	<script>
-		{% if DOJANGO.VERSION > '1.6' %}dojoConfig{% else %}djConfig{% endif %}.parseOnLoad = false;
+		{{ DOJANGO.DJ_CONFIG_NAME }}.parseOnLoad = false;
 	</script>
 {% endblock %}
 
@@ -62,7 +62,7 @@
 
 	<!-- a check for stray globals: not needed! -->
 	<script type="text/javascript">
-		window.__globalList = { dojo: true, dijit: true, dojox: true, dojoConfig:true };
+		window.__globalList = { dojo: true, dijit: true, dojox: true, {{ DOJANGO.DJ_CONFIG_NAME }}:true };
 		for(var i in window){
 			window.__globalList[i] = true;
 		}
