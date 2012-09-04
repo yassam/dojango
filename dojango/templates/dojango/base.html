@@ -64,7 +64,7 @@
     <script type="text/javascript" src="{{ DOJANGO.DOJO_SRC_FILE }}"></script>
     
     {# for a locally built version dojango should already be included #}
-    {% if not DOJANGO.IS_LOCAL_BUILD %}
+    {% if not DOJANGO.IS_LOCAL_BUILD and not DOJANGO.USE_AMD %}
       <script type="text/javascript" src="{{ DOJANGO.DOJANGO_SRC_FILE }}"></script>
     {% endif %}
     
