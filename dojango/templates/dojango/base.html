@@ -5,7 +5,7 @@
     {# if the context processor did not pass the DOJANGO context, we set it here #}
     {% set_dojango_context %}
   {% endif %}
-    
+
   {% if not LANGUAGE_CODE %}
     {% load i18n %}
     {% get_current_language as LANGUAGE_CODE %}
@@ -30,10 +30,9 @@
     {% endblock %}
     <title>{% block dojango_page_title %}{% endblock %}</title>
     {% block _dojango_dojo_styles %}
-      <style type="text/css">
-      @import "{{ DOJANGO.DOJO_URL }}/resources/dojo.css";
-      @import "{{ DOJANGO.THEME_CSS_URL }}";
-    </style>
+    {# Don't use import statement within a style block - Django Compressor doesn't deal well with them #}
+    <link rel="stylesheet" href="{{ DOJANGO.DOJO_URL }}/resources/dojo.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ DOJANGO.THEME_CSS_URL }}" type="text/css"/>
     {% endblock %}
     <script type="text/javascript">
       {# baseUrl setting is needed, if you want to combine a local with a remote build! #}
@@ -55,18 +54,18 @@
       };
       {% endblock %}
     </script>
-    
+
     {% block _dojango_post_dj_config %}{# don't use this block, it is used by base_i18n.html #}{% endblock %}
-    
+
     {% block dojango_post_dj_config %}{# if you want to manipulate djConfig stuff #}{% endblock %}
-    
+
     <script type="text/javascript" src="{{ DOJANGO.DOJO_SRC_FILE }}"></script>
-    
+
     {# for a locally built version dojango should already be included #}
     {% if not DOJANGO.IS_LOCAL_BUILD and not DOJANGO.USE_AMD %}
       <script type="text/javascript" src="{{ DOJANGO.DOJANGO_SRC_FILE }}"></script>
     {% endif %}
-    
+
     {% block dojango_header_extra %}
     {% endblock %}
   </head>
