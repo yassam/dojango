@@ -4,7 +4,7 @@ from django.conf import settings
 DEBUG = getattr(settings, "DEBUG", False)
 DEFAULT_CHARSET = getattr(settings, 'DEFAULT_CHARSET', 'utf-8')
 
-DOJO_VERSION = getattr(settings, "DOJANGO_DOJO_VERSION", "1.8.1")
+DOJO_VERSION = getattr(settings, "DOJANGO_DOJO_VERSION", "1.8.3")
 # NOTE: you have to use "google_xd" for dojo versions < 1.7.0
 DOJO_PROFILE = getattr(settings, "DOJANGO_DOJO_PROFILE", "google")
 # Since Dojo 1.7.0 you are able to use the new AMD loader
@@ -39,7 +39,7 @@ CDN_USE_SSL = getattr(settings, "DOJANGO_CDN_USE_SSL", False) # is dojo served v
 _aol_versions = ('0.9.0', '1.0.0', '1.0.2', '1.1.0', '1.1.1', '1.2.0', '1.2.3', '1.3', '1.3.0', '1.3.1', '1.3.2', '1.4', '1.4.0', '1.4.1', '1.4.3', '1.5', '1.5.0', '1.6', '1.6.0')
 _aol_gfx_versions = ('0.9.0', '1.0.0', '1.0.2', '1.1.0', '1.1.1',)
 _google_xd_versions = ('1.1.1', '1.2', '1.2.0', '1.2.3', '1.3', '1.3.0', '1.3.1', '1.3.2', '1.4', '1.4.0', '1.4.1', '1.4.3', '1.5', '1.5.0', '1.6', '1.6.0', '1.6.1')
-_google_versions = ('1.7', '1.7.0', '1.7.1', '1.7.2', '1.8.0', '1.8.1',) # since Dojo 1.7.0 an alternative loading mechanism is in place
+_google_versions = ('1.7', '1.7.0', '1.7.1', '1.7.2', '1.8.0', '1.8.1', '1.8.2', '1.8.3') # since Dojo 1.7.0 an alternative loading mechanism is in place
 DOJO_PROFILES = {
     'google': {'base_url':(CDN_USE_SSL and 'https' or 'http') + '://ajax.googleapis.com/ajax/libs/dojo', 'versions':_google_versions},
     'google_uncompressed': {'base_url':(CDN_USE_SSL and 'https' or 'http') + '://ajax.googleapis.com/ajax/libs/dojo', 'uncompressed':True, 'versions':_google_versions},
