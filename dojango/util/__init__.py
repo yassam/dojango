@@ -9,8 +9,16 @@ from django.db.models import ImageField, FileField
 from django.db.models.query import QuerySet
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from django.utils import simplejson as json
 from django.utils.functional import Promise
+
+# From Django 1.5 onwards the use of simplejson is deprecated and
+# causes an error
+import django
+from distutils.version import StrictVersion
+if StrictVersion(django.get_version()) >= StrictVersion('1.5'):
+    import json
+else:
+    from django.utils import simplejson as json
 
 try:
     # we need it, if we want to serialize query- and model-objects
