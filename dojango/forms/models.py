@@ -2,7 +2,8 @@ from django.forms import *
 from django.forms.models import BaseModelFormSet
 from django.forms.models import BaseInlineFormSet
 from django.forms.models import ModelChoiceIterator
-from django.forms.models import InlineForeignKeyHiddenInput, InlineForeignKeyField
+#???? from django.forms.models import InlineForeignKeyHiddenInput, InlineForeignKeyField
+from django.forms.models import InlineForeignKeyField
 
 from django.utils.text import capfirst
 
@@ -32,11 +33,12 @@ class ModelMultipleChoiceField(DojoFieldMixin, models.ModelMultipleChoiceField):
 
 # Fields #####################################################################
 
-class InlineForeignKeyHiddenInput(DojoWidgetMixin, InlineForeignKeyHiddenInput):
-    """
-    Overwritten InlineForeignKeyHiddenInput to use the dojango widget mixin
-    """
-    dojo_type = 'dijit.form.TextBox' # otherwise dijit.form.Form can't get its values
+# ????
+# class InlineForeignKeyHiddenInput(DojoWidgetMixin, InlineForeignKeyHiddenInput):
+#     """
+#     Overwritten InlineForeignKeyHiddenInput to use the dojango widget mixin
+#     """
+#     dojo_type = 'dijit.form.TextBox' # otherwise dijit.form.Form can't get its values
 
 class InlineForeignKeyField(DojoFieldMixin, InlineForeignKeyField, Field):
     """
