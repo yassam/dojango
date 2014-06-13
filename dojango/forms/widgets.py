@@ -169,6 +169,7 @@ class MultipleHiddenInput(DojoWidgetMixin, widgets.MultipleHiddenInput):
 
 class FileInput(DojoWidgetMixin, widgets.FileInput):
     dojo_type = 'dojox.form.FileInput'
+    #dojo_type = 'dojox.form.Uploader'
     class Media:
         css = {
             'all': ('%(base_url)s/dojox/form/resources/FileInput.css' % {
