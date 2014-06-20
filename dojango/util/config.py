@@ -49,11 +49,12 @@ class Config:
         ret['USE_GFX'] = self.config.get("use_gfx", False)
         ret['USE_AMD'] = settings.DOJO_USE_AMD_LOADER
         ret['VERSION'] = self.version
+        ret['VERSION_1_6_OR_LATER'] = not settings.version_less_than(self.version, '1.6')
         # preparing all dojo related urls here
         ret['THEME_CSS_URL'] = self.theme_css_url()
         ret['THEME'] = settings.DOJO_THEME
         ret['BASE_MEDIA_URL'] = settings.BASE_MEDIA_URL
-        ret['DOJO_BASE_PATH'] = self.version > '1.6' and self.dojo_base_path() or '%s/dojo/' % self.dojo_base_path()
+        ret['DOJO_BASE_PATH'] = settings.version_less_than('1.6', self.version) and self.dojo_base_path() or '%s/dojo/' % self.dojo_base_path()
         ret['DOJO_URL'] = self.dojo_url()
         ret['DIJIT_URL'] = self.dijit_url()
         ret['DOJOX_URL'] = self.dojox_url()

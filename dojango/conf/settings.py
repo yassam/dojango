@@ -1,16 +1,40 @@
 import os
+import re
 from django.conf import settings
 
 DEBUG = getattr(settings, "DEBUG", False)
 DEFAULT_CHARSET = getattr(settings, 'DEFAULT_CHARSET', 'utf-8')
+VERSION_RE = re.compile(r"(\d+)\.?(\d*)\.?(\d*)")
 
-DOJO_VERSION = getattr(settings, "DOJANGO_DOJO_VERSION", "1.9.3")
+def group_index_to_num(g, index):
+    return 0 if g[index] == "" else int(g[index])
+
+def version_str_to_num(v):
+    m = VERSION_RE.match(v)
+    if m:
+        g = m.groups()
+        major = group_index_to_num(g, 0)
+        minor = group_index_to_num(g, 1)
+        revision = group_index_to_num(g, 2)
+        return major * (10 ** (3 * 2)) + minor * (10 ** 3) + revision
+    else:
+        return 0
+
+def version_less_than(v1, v2):
+    """
+    Compare two strings of the form "1.2.3". Needed because "1.32.5"
+    is lexographically < "1.4.2" even though it's a higher version
+    """
+    return version_str_to_num(v1) < version_str_to_num(v2)
+
+DOJO_VERSION = getattr(settings, "DOJANGO_DOJO_VERSION", "1.10.0")
+#DOJO_VERSION = getattr(settings, "DOJANGO_DOJO_VERSION", "1.9.3")
 # NOTE: you have to use "google_xd" for dojo versions < 1.7.0
 DOJO_PROFILE = getattr(settings, "DOJANGO_DOJO_PROFILE", "google")
 # Since Dojo 1.7.0 you are able to use the new AMD loader
 DOJO_USE_AMD_LOADER = getattr(settings, "DOJANGO_DOJO_USE_AMD_LOADER", False)
 # Since Dojo 1.6 djConfig has been deprecated in favour of dojoConfig.
-USE_DJ_CONFIG = getattr(settings, "DOJANGO_USE_DJ_CONFIG", DOJO_VERSION < "1.6")
+USE_DJ_CONFIG = getattr(settings, "DOJANGO_USE_DJ_CONFIG", version_less_than(DOJO_VERSION, "1.6"))
 # DJ_CONFIG_NAME is the actual name of the global dojo config object
 DJ_CONFIG_NAME = getattr(settings, "DOJANGO_DJ_CONFIG_NAME", "djConfig" if USE_DJ_CONFIG else "dojoConfig")
 
@@ -39,7 +63,7 @@ CDN_USE_SSL = getattr(settings, "DOJANGO_CDN_USE_SSL", False) # is dojo served v
 _aol_versions = ('0.9.0', '1.0.0', '1.0.2', '1.1.0', '1.1.1', '1.2.0', '1.2.3', '1.3', '1.3.0', '1.3.1', '1.3.2', '1.4', '1.4.0', '1.4.1', '1.4.3', '1.5', '1.5.0', '1.6', '1.6.0')
 _aol_gfx_versions = ('0.9.0', '1.0.0', '1.0.2', '1.1.0', '1.1.1',)
 _google_xd_versions = ('1.1.1', '1.2', '1.2.0', '1.2.3', '1.3', '1.3.0', '1.3.1', '1.3.2', '1.4', '1.4.0', '1.4.1', '1.4.3', '1.5', '1.5.0', '1.6', '1.6.0', '1.6.1')
-_google_versions = ('1.7', '1.7.0', '1.7.1', '1.7.2', '1.8.0', '1.8.1', '1.8.2', '1.8.3', '1.9.1', '1.9.3') # since Dojo 1.7.0 an alternative loading mechanism is in place
+_google_versions = ('1.7', '1.7.0', '1.7.1', '1.7.2', '1.8.0', '1.8.1', '1.8.2', '1.8.3', '1.9.1', '1.9.3', '1.10.0') # since Dojo 1.7.0 an alternative loading mechanism is in place
 DOJO_PROFILES = {
     'google': {'base_url':(CDN_USE_SSL and 'https' or 'http') + '://ajax.googleapis.com/ajax/libs/dojo', 'versions':_google_versions},
     'google_uncompressed': {'base_url':(CDN_USE_SSL and 'https' or 'http') + '://ajax.googleapis.com/ajax/libs/dojo', 'uncompressed':True, 'versions':_google_versions},
