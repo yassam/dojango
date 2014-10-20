@@ -13,6 +13,7 @@ from dojango.util import json_encode
 from dojango.util.config import Config
 
 from dojango.util import dojo_collector
+from dojango.conf.settings import version_less_than
 
 __all__ = (
     'Media', 'MediaDefiningClass', # original django classes
@@ -396,7 +397,7 @@ class EmailTextInput(ValidationTextInput):
     js_regex_func = "dojox.validate.regexp.emailAddress"
 
     def __init__(self, attrs=None):
-        if dojo_config.version < '1.3':
+        if version_less_than(dojo_config.version,  '1.3'):
             self.js_regex_func = 'dojox.regexp.emailAddress'
         super(EmailTextInput, self).__init__(attrs)
 
