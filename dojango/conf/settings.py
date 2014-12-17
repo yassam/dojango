@@ -27,8 +27,8 @@ def version_less_than(v1, v2):
     """
     return version_str_to_num(v1) < version_str_to_num(v2)
 
-DOJO_VERSION = getattr(settings, "DOJANGO_DOJO_VERSION", "1.10.2")
-#DOJO_VERSION = getattr(settings, "DOJANGO_DOJO_VERSION", "1.9.3")
+DOJO_VERSION = getattr(settings, "DOJANGO_DOJO_VERSION", "1.10.3")
+
 # NOTE: you have to use "google_xd" for dojo versions < 1.7.0
 DOJO_PROFILE = getattr(settings, "DOJANGO_DOJO_PROFILE", "google")
 # Since Dojo 1.7.0 you are able to use the new AMD loader
