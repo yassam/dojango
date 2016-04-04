@@ -74,7 +74,7 @@
 {% endspaceless %}
 
 {% block dojango_body %}
-  <body class="{{ DOJANGO.THEME }}">
+  <body class="{{ DOJANGO.THEME }} {% block dojango_body_class %}{% endblock %}">
   {% block dojango_content %}
   {% endblock %}
   {% block dojango_require %}
