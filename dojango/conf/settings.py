@@ -27,7 +27,7 @@ def version_less_than(v1, v2):
     """
     return version_str_to_num(v1) < version_str_to_num(v2)
 
-DOJO_VERSION = getattr(settings, "DOJANGO_DOJO_VERSION", "1.10.4")
+DOJO_VERSION = getattr(settings, "DOJANGO_DOJO_VERSION", "1.11.1")
 
 # NOTE: you have to use "google_xd" for dojo versions < 1.7.0
 DOJO_PROFILE = getattr(settings, "DOJANGO_DOJO_PROFILE", "google")
