@@ -2,7 +2,8 @@ from django.conf import settings
 from dojango.conf import settings as dojango_settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils._os import safe_join
-from django.conf.urls import patterns
+from django.conf.urls import url
+from django.views.static import serve
 from os import path, listdir
 
 def find_app_dir(app_name):
@@ -91,6 +92,10 @@ def _build_urlmap():
 _check_app_dojo_dirs() # is each dojo module just created once?
 
 dojo_media_urls = _build_urlmap()
-urls = [ ('^%s(?P<path>.*)$' % url, 'serve', {'document_root': root, 'show_indexes': True} )
-         for url, root in dojo_media_urls ]
-url_patterns = patterns('django.views.static', *urls) # url_patterns that can be used directly within urls.py
+# urls = [ ('^%s(?P<path>.*)$' % url, 'serve', {'document_root': root, 'show_indexes': True} )
+#          for url, root in dojo_media_urls ]
+# url_patterns = patterns('django.views.static', *urls) # url_patterns that can be used directly within urls.py
+url_patterns = [ url('^%s(?P<path>.*)$' % url_str,
+                     serve,
+                     {'document_root': root, 'show_indexes': True})
+                 for url_str, root in dojo_media_urls ]
