@@ -1,5 +1,5 @@
 # Create your views here.
-from django.db.models import get_model
+from django.apps import apps
 from django.db import models
 from django.shortcuts import render_to_response
 from django.conf import settings
@@ -45,7 +45,7 @@ def datagrid_list(request, app_name, model_name, access_model_callback=access_mo
     """
     
     # get the model
-    model = get_model(app_name,model_name)
+    model = apps.get_model(app_name,model_name)
     
     # start with a very broad query set
     target = model.objects.all()
