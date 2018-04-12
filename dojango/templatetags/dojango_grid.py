@@ -1,5 +1,5 @@
 from django import template
-from django.db.models import get_model
+from django.apps import apps
 from django.db import models
 from django.template import TemplateSyntaxError
 from django.template.loader import get_template
@@ -72,7 +72,7 @@ class DatagridNode(template.Node):
 
     def __init__(self, app, model, options):
         if app and model:
-            self.model = get_model(app,model)
+            self.model = apps.get_model(app,model)
             self.app_name = app
             self.model_name = model
         self.options = options
