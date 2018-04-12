@@ -16,7 +16,7 @@ from dojango.forms.widgets import DojoWidgetMixin, Textarea, Select, SelectMulti
 
 __all__ = (
     'ModelForm', 'BaseModelForm', 'model_to_dict', 'fields_for_model',
-    'save_instance', 'ModelChoiceField', 'ModelMultipleChoiceField',
+    'ModelChoiceField', 'ModelMultipleChoiceField',
 )
     
 class ModelChoiceField(DojoFieldMixin, models.ModelChoiceField):
@@ -78,7 +78,7 @@ MODEL_TO_FORM_FIELD_MAP = (
     (fields.related.ForeignKey, ModelChoiceField),
     (fields.files.ImageField, ImageField),
     (fields.files.FileField, FileField),
-    (fields.IPAddressField, IPAddressField),
+    (fields.GenericIPAddressField, GenericIPAddressField),
     (fields.related.ManyToManyField, ModelMultipleChoiceField),
     (fields.NullBooleanField, CharField),
     (fields.BooleanField, BooleanField),

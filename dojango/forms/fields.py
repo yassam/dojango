@@ -12,7 +12,7 @@ __all__ = (
     'DateField', 'TimeField', 'DateTimeField', 'SplitDateTimeField',
     'RegexField', 'DecimalField', 'FloatField', 'FilePathField',
     'MultipleChoiceField', 'NullBooleanField', 'EmailField',
-    'IPAddressField', 'URLField', 'SlugField',
+    'GenericIPAddressField', 'URLField', 'SlugField',
 )
 
 class DojoFieldMixin(object):
@@ -146,8 +146,8 @@ class NullBooleanField(DojoFieldMixin, fields.NullBooleanField):
 class EmailField(DojoFieldMixin, fields.EmailField):
     widget = widgets.EmailTextInput
     
-class IPAddressField(DojoFieldMixin, fields.IPAddressField):
-    widget = widgets.IPAddressTextInput
+class GenericIPAddressField(DojoFieldMixin, fields.GenericIPAddressField):
+    widget = widgets.GenericIPAddressField
     
 class URLField(DojoFieldMixin, fields.URLField):
     widget = widgets.URLTextInput
