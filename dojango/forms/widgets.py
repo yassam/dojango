@@ -17,17 +17,19 @@ from dojango.conf.settings import version_less_than
 
 __all__ = (
     'Media', 'MediaDefiningClass', # original django classes
-    'DojoWidgetMixin', 'Input', 'Widget', 'TextInput', 'PasswordInput',
-    'HiddenInput', 'MultipleHiddenInput', 'FileInput', 'Textarea',
-    'DateInput', 'DateTimeInput', 'TimeInput', 'CheckboxInput', 'Select',
-    'NullBooleanSelect', 'SelectMultiple', 'RadioFieldRenderer',
-    'RadioSelect', 'CheckboxSelectMultiple', 'MultiWidget', 'SplitDateTimeWidget',
-    'SplitHiddenDateTimeWidget', 'SimpleTextarea', 'EditorInput', 'HorizontalSliderInput',
-    'VerticalSliderInput', 'ValidationTextInput', 'ValidationPasswordInput',
-    'EmailTextInput', 'IPAddressTextInput', 'URLTextInput', 'NumberTextInput',
-    'RangeBoundTextInput', 'NumberSpinnerInput', 'RatingInput', 'DateInputAnim',
-    'DropDownSelect', 'CheckedMultiSelect', 'FilteringSelect', 'ComboBox',
-    'ComboBoxStore', 'FilteringSelectStore', 'ListInput',
+    'DojoWidgetMixin', 'Input', 'Widget', 'TextInput',
+    'PasswordInput', 'HiddenInput', 'MultipleHiddenInput',
+    'FileInput', 'Textarea', 'DateInput', 'DateTimeInput',
+    'TimeInput', 'CheckboxInput', 'Select', 'NullBooleanSelect',
+    'SelectMultiple', 'RadioSelect', 'CheckboxSelectMultiple',
+    'MultiWidget', 'SplitDateTimeWidget', 'SplitHiddenDateTimeWidget',
+    'SimpleTextarea', 'EditorInput', 'HorizontalSliderInput',
+    'VerticalSliderInput', 'ValidationTextInput',
+    'ValidationPasswordInput', 'EmailTextInput', 'IPAddressTextInput',
+    'URLTextInput', 'NumberTextInput', 'RangeBoundTextInput',
+    'NumberSpinnerInput', 'RatingInput', 'DateInputAnim',
+    'DropDownSelect', 'CheckedMultiSelect', 'FilteringSelect',
+    'ComboBox', 'ComboBoxStore', 'FilteringSelectStore', 'ListInput',
 )
 
 dojo_config = Config() # initialize the configuration
@@ -284,9 +286,6 @@ class NullBooleanSelect(DojoWidgetMixin, widgets.NullBooleanSelect):
 
 class SelectMultiple(DojoWidgetMixin, widgets.SelectMultiple):
     dojo_type = 'dijit.form.MultiSelect'
-
-#RadioInput = widgets.RadioInput
-RadioFieldRenderer = widgets.RadioFieldRenderer
 
 class RadioSelect(DojoWidgetMixin, widgets.RadioSelect):
     dojo_type = 'dijit.form.RadioButton'
