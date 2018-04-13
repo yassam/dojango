@@ -5,6 +5,7 @@ from django.http import HttpResponseServerError
 from django.utils.encoding import smart_unicode
 
 from dojango.util import dojo_collector
+from django.utils.deprecation import MiddlewareMixin
 
 class AJAXSimpleExceptionResponse:
     """Thanks to newmaniese of http://www.djangosnippets.org/snippets/650/ .
@@ -32,7 +33,7 @@ class AJAXSimpleExceptionResponse:
                 response += "%s\n" % tb
             return HttpResponseServerError(response)
 
-class DojoCollector:
+class DojoCollector(MiddlewareMixin):
     """This middleware enables/disables the global collector object for each 
     request. It is needed, when the dojango.forms integration is used.
     """
@@ -43,7 +44,7 @@ class DojoCollector:
         dojo_collector.deactivate()
         return response
     
-class DojoAutoRequire:
+class DojoAutoRequire(MiddlewareMixin):
     """
     USE THE MIDDLEWARE ABOVE (IT IS USING A GLOBAL COLLECTOR OBEJCT)!
     
