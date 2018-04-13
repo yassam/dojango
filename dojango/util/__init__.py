@@ -3,7 +3,7 @@ import datetime
 from decimal import Decimal
 
 from dojango.conf import settings # using the app-specific settings
-from django.core.serializers.json import DateTimeAwareJSONEncoder
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Model
 from django.db.models import ImageField, FileField
 from django.db.models.query import QuerySet
@@ -193,7 +193,7 @@ def json_encode(data):
         return ret
     
     ret = _any(data)
-    return json.dumps(ret, cls=DateTimeAwareJSONEncoder)
+    return json.dumps(ret, cls=DjangoJSONEncoder)
 
 def json_decode(json_string):
     """

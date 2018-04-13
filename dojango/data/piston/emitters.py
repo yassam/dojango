@@ -1,4 +1,4 @@
-from django.core.serializers.json import DateTimeAwareJSONEncoder
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models.query import QuerySet
 from django.utils import simplejson as json
 from piston.emitters import Emitter
@@ -60,7 +60,7 @@ class DojoDataEmitter(Emitter):
             }
 
         serialized_data = json.dumps(data, ensure_ascii=False,
-            cls=DateTimeAwareJSONEncoder, indent=indent)
+            cls=DjangoJSONEncoder, indent=indent)
 
         if callback and is_valid_jsonp_callback_value(callback):
             return '%s(%s)' % (callback, serialized_data)
