@@ -100,18 +100,23 @@ class DojoWidgetMixin:
             inner_dict = inner_dict[i]
         return attrs
 
-    def build_attrs(self, extra_attrs=None, **kwargs):
+    def _django_build_attrs(self, base_attrs, extra_attrs=None):
+        "Copy of Django's Widget.build_attrs() function"
+        attrs = base_attrs.copy()
+        if extra_attrs is not None:
+            attrs.update(extra_attrs)
+        return attrs
+
+    def build_attrs(self, base_attrs, extra_attrs=None):
         """Overwritten helper function for building an attribute dictionary.
         This helper also takes care passing the used dojo modules to the
         collector. Furthermore it mixes in the used field attributes into the
         attributes of this widget.
         """
+        attrs = self._django_build_attrs(self.attrs, extra_attrs)
         # gathering all widget attributes
-        attrs = dict(self.attrs, **kwargs)
         field_attr = self.default_field_attr_map.copy() # use a copy of that object. otherwise changed field_attr_map would overwrite the default-map for all widgets!
         field_attr.update(self.field_attr_map) # the field-attribute-mapping can be customzied
-        if extra_attrs:
-            attrs.update(extra_attrs)
         # assigning dojoType to our widget
         dojo_type = getattr(self, "dojo_type", False)
         if dojo_type:
@@ -341,7 +346,7 @@ class EditorInput(Textarea):
 
     def render(self, name, value, attrs=None):
         if value is None: value = ''
-        final_attrs = self.build_attrs(attrs, name=name)
+        final_attrs = self.build_attrs(attrs, dict(name=name))
         # dijit.Editor must be rendered in a div (see dijit/_editor/RichText.js)
         return mark_safe(u'<div%s>%s</div>' % (flatatt(final_attrs),
                 force_unicode(value))) # we don't escape the value for the editor
@@ -377,7 +382,7 @@ class ValidationTextInput(TextInput):
 
     def render(self, name, value, attrs=None):
         if self.js_regex_func:
-            attrs = self.build_attrs(attrs, regExpGen=self.js_regex_func)
+            attrs = self.build_attrs(attrs, dict(regExpGen=self.js_regex_func))
         return super(ValidationTextInput, self).render(name, value, attrs)
 
 class ValidationPasswordInput(PasswordInput):
@@ -528,7 +533,7 @@ class ComboBoxStore(TextInput):
     def render(self, name, value, attrs=None):
         if value is None: value = ''
         store_id = self.get_store_id(getattr(attrs, "id", None), name)
-        final_attrs = self.build_attrs(attrs, type=self.input_type, name=name, store=store_id)
+        final_attrs = self.build_attrs(attrs, dict(type=self.input_type, name=name, store=store_id))
         if value != '':
             # Only add the 'value' attribute if a value is non-empty.
             final_attrs['value'] = force_unicode(self._format_value(value))
