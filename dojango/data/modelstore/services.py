@@ -1,6 +1,6 @@
 import sys, inspect
 from django.utils import simplejson
-from exceptions import ServiceException
+from .exceptions import ServiceException
 
 def servicemethod(*args, **kwargs):
     """ The Service method decorator.
@@ -98,7 +98,7 @@ class BaseService(object):
             reference in all the __servicemethod__
             properties on servicemethods in this service
         """
-        for method in self.methods.values():
+        for method in list(self.methods.values()):
             method.__servicemethod__['store'] = store
         self._store = store
     store = property(_get_store, _set_store)
@@ -142,7 +142,7 @@ class BaseService(object):
     def list_methods(self):
         """ Returns a list of all servicemethod names
         """
-        return self.methods.keys()
+        return list(self.methods.keys())
 
     def process_request(self, request):
         """ Processes a request object --
@@ -248,7 +248,7 @@ class JsonService(BaseService):
             'methods': []
         }
 
-        for name, method in self.methods.items():
+        for name, method in list(self.methods.items()):
 
             # Figure out what params to report --
             # we don't want to report the 'store' and 'request'
