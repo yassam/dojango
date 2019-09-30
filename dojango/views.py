@@ -12,7 +12,7 @@ from dojango.util.perms import access_model, access_model_field
 
 import operator
 from functools import reduce
-    
+
 # prof included for people using http://www.djangosnippets.org/snippets/186/
 AVAILABLE_OPTS =  ('search_fields','prof','inclusions','sort','search','count','order','start')
 
@@ -23,34 +23,34 @@ def datagrid_list(request, app_name, model_name, access_model_callback=access_mo
     by dojos ReadQueryStore for the dojango datagrid.  The following GET params are handled with
     specially:
       'search_fields','inclusions','sort','search','count','order','start'
-      
+
     search_fields: list of fields for model to equal the search, each OR'd together.
     search: see search_fields
     sort: sets order_by
     count: sets limit
     start: sets offset
     inclusions: list of functions in the model that will be called and result added to JSON
-     
+
     any other GET param will be added to the filter on the model to determine what gets returned.  ie
     a GET param of id__gt=5 will result in the equivalent of model.objects.all().filter( id__gt=5 )
-    
+
     The access_model_callback is a function that gets passed the request, app_name, model_name, and
     an instance of the model which will only be added to the json response if returned True
-    
+
     The access_field_callback gets passed the request, app_name, model_name, field_name,
-    and the instance.  Return true to allow access of a given field_name to model 
+    and the instance.  Return true to allow access of a given field_name to model
     app_name.model_name given instance model.
-    
+
     The default callbacks will allow access to any model in added to the DOJANGO_DATAGRID_ACCESS
     in settings.py and any function/field that is not "delete"
     """
-    
+
     # get the model
     model = apps.get_model(app_name,model_name)
-    
+
     # start with a very broad query set
     target = model.objects.all()
-    
+
     # modify query set based on the GET params, dont do the start/count splice
     # custom options passed from "query" param in datagrid
     for key in [ d for d in list(request.GET.keys()) if not d in AVAILABLE_OPTS]:
@@ -63,23 +63,23 @@ def datagrid_list(request, app_name, model_name, access_model_callback=access_mo
         target = target.filter(reduce(operator.or_, ored))
 
     if 'sort' in request.GET and request.GET["sort"] not in request.GET["inclusions"] and request.GET["sort"][1:] not in request.GET["inclusions"]:
-		# if the sort field is in inclusions, it must be a function call.. 
+        # if the sort field is in inclusions, it must be a function call..
         target = target.order_by(request.GET['sort'])
     else:
-		if 'sort' in request.GET and request.GET["sort"].startswith('-'):
-			target = sorted(target, lambda x,y: cmp(getattr(x,request.GET["sort"][1:])(),getattr(y,request.GET["sort"][1:])()));
-			target.reverse();
-		elif 'sort' in request.GET:
-			target =  sorted(target, lambda x,y: cmp(getattr(x,request.GET["sort"])(),getattr(y,request.GET["sort"])()));
-    
-    
+        if 'sort' in request.GET and request.GET["sort"].startswith('-'):
+            target = sorted(target, lambda x,y: cmp(getattr(x,request.GET["sort"][1:])(),getattr(y,request.GET["sort"][1:])()));
+            target.reverse();
+        elif 'sort' in request.GET:
+            target =  sorted(target, lambda x,y: cmp(getattr(x,request.GET["sort"])(),getattr(y,request.GET["sort"])()));
+
+
     # get only the limit number of models with a given offset
     target=target[int(request.GET['start']):int(request.GET['start'])+int(request.GET['count'])]
     # create a list of dict objects out of models for json conversion
     complete = []
     for data in target:
         # TODO: complete rewrite to use dojangos already existing serializer (or the dojango ModelStore)
-        if access_model_callback(app_name, model_name, request, data):   
+        if access_model_callback(app_name, model_name, request, data):
             ret = {}
             for f in data._meta.fields:
                 if access_field_callback(app_name, model_name, f.attname, request, data):
@@ -94,7 +94,7 @@ def datagrid_list(request, app_name, model_name, access_model_callback=access_mo
             if 'inclusions' in request.GET:
                 for k in request.GET['inclusions'].split(','):
                     if k == "": continue
-                    if access_field_callback(app_name, model_name, k, request, data): 
+                    if access_field_callback(app_name, model_name, k, request, data):
                         try:
                             ret[k] = getattr(data,k)()
                         except:
@@ -236,6 +236,6 @@ def test_states(request):
         if state['name'].lower().startswith(search_string.lower()):
             ret.append(state)
     ret = ret[start:end]
-    
+
     # Convert the data into dojo.date-store compatible format.
     return to_dojo_data(ret, identifier='abbreviation')
