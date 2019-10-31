@@ -219,13 +219,13 @@ else:  # fallback for older django versions
             if format:
                 self.format = format
 
-        def render(self, name, value, attrs=None):
+        def render(self, name, value, attrs=None, renderer=None):
             if value is None:
                 value = ''
             elif hasattr(value, 'strftime'):
                 value = datetime_safe.new_date(value)
                 value = value.strftime(self.format)
-            return super(DateInput, self).render(name, value, attrs)
+            return super(DateInput, self).render(name, value, attrs, renderer)
 
 if TimeInput:
     class TimeInput(DojoWidgetMixin, widgets.TimeInput):
@@ -267,12 +267,12 @@ else: # fallback for older django versions
             if format:
                 self.format = format
 
-        def render(self, name, value, attrs=None):
+        def render(self, name, value, attrs=None, renderer=None):
             if value is None:
                 value = ''
             elif hasattr(value, 'strftime'):
                 value = value.strftime(self.format)
-            return super(TimeInput, self).render(name, value, attrs)
+            return super(TimeInput, self).render(name, value, attrs, renderer)
 
 class CheckboxInput(DojoWidgetMixin, widgets.CheckboxInput):
     dojo_type = 'dijit.form.CheckBox'
@@ -344,7 +344,7 @@ class SimpleTextarea(Textarea):
 class EditorInput(Textarea):
     dojo_type = 'dijit.Editor'
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if value is None: value = ''
         final_attrs = self.build_attrs(attrs, dict(name=name))
         # dijit.Editor must be rendered in a div (see dijit/_editor/RichText.js)
@@ -380,10 +380,10 @@ class ValidationTextInput(TextInput):
     ]
     js_regex_func = None
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if self.js_regex_func:
             attrs = self.build_attrs(attrs, dict(regExpGen=self.js_regex_func))
-        return super(ValidationTextInput, self).render(name, value, attrs)
+        return super(ValidationTextInput, self).render(name, value, attrs, renderer)
 
 class ValidationPasswordInput(PasswordInput):
     dojo_type = 'dijit.form.ValidationTextBox'
@@ -530,7 +530,7 @@ class ComboBoxStore(TextInput):
         self.extra_dojo_require.append(self.store)
         super(ComboBoxStore, self).__init__(attrs)
     
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if value is None: value = ''
         store_id = self.get_store_id(getattr(attrs, "id", None), name)
         final_attrs = self.build_attrs(attrs, dict(type=self.input_type, name=name, store=store_id))
